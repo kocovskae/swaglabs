@@ -20,11 +20,11 @@ After(async () => {
   await browser.close();
 });
 
-Given('User is on the login page', async () => {
+Given('the user is on the login page', async () => {
   await loginPage.goto();
 });
 
-When('user enter the {string} and {string} and click on login button', async (username: string, password: string) => {
+When('the user enters {string} as username and {string} as password and click on login button', async (username: string, password: string) => {
   await loginPage.login(username, password);
 });
 

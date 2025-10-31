@@ -1,9 +1,9 @@
 Feature: User Login
-As a registred user 
-I want to login to the application
-And see my application dashboard
+  As a registered user
+  I want to log in to the application
+  So that I can access my dashboard
 
-  Scenario: Succussfull login with valid creadentials
-    Given User is on the login page
-    When user enter the "standard_user" and "secret_sauce" and click on login button
+  Scenario: Successful login with valid credentials
+    Given the user is on the login page
+    When the user enters "standard_user" as username and "secret_sauce" as password and click on login button
     Then the user should see the dashboard page
