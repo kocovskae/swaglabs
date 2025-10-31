@@ -9,6 +9,11 @@ export class InventoryPage {
   readonly productPrices;
   readonly addToCartButton;
   readonly removeCartButton;
+  readonly productDetailsImage;
+  readonly productDetailsName;
+  readonly productDetailsDescription;
+  readonly productDetailsPrice;
+  readonly productDetailsAddCart;
 
   constructor(page: Page) {
     this.page = page;
@@ -19,6 +24,11 @@ export class InventoryPage {
     this.productPrices = page.locator('.inventory_item_price');
     this.addToCartButton = page.locator('.btn_inventory');
     this.removeCartButton = page.locator('.btn_secondary');
+    this.productDetailsImage = page.locator(".inventory_details_img_container");
+    this.productDetailsName = page.locator(".inventory_details_name");
+    this.productDetailsDescription =  page.locator(".inventory_details_desc");
+    this.productDetailsPrice = page.locator(".inventory_details_price");
+    this.productDetailsAddCart = page.locator("#add-to-cart");
   }
 
   async verifyInventoryPageIsVisible(){
@@ -63,10 +73,26 @@ async verifyProductIsAddedToCart(index: number) {
   await expect(removeButton.nth(index)).toBeVisible();
 }
 
-async removeFromCart(index: number) {
+async removeProductFromProductsPage(index: number) {
   const removeProduct = this.removeCartButton.nth(index);
   await expect(removeProduct.nth(index)).toBeVisible();
   await removeProduct.click();
 }
 
+async clickOnProduct() {
+  await this.productNames.first().click();
+}
+
+async verifyProductDetailsOnProductPage() {
+  const productImage = this.productDetailsImage;
+  await expect(productImage).toBeVisible();
+  const productName = this.productDetailsName;
+  await expect(productName).toBeVisible();
+  const productDescripiton = this.productDetailsDescription;
+  await expect(productDescripiton).toBeVisible();
+  const productPrice = this.productDetailsPrice;
+  await expect(productPrice).toBeVisible();
+  const productAddCart = this.productDetailsAddCart;
+  await expect(productAddCart).toBeVisible();
+}
 }

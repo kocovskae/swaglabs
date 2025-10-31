@@ -9,7 +9,7 @@ export class CartPage {
     readonly checkoutButton;
     readonly addedProductName;
     readonly removeBtn;
-    readonly emptyCart;
+    readonly cart;
 
     constructor(page: Page) {
         this.page = page;
@@ -20,7 +20,7 @@ export class CartPage {
         this.checkoutButton = page.locator("#checkout");
         this.addedProductName = page.locator(".cart_item .inventory_item_name");
         this.removeBtn = page.locator(".cart_button");
-        this.emptyCart = page.locator(".cart_item");
+        this.cart = page.locator(".cart_item");
     }
 
     async clickOnCartIcon() {
@@ -50,9 +50,15 @@ export class CartPage {
         await expect(this.checkoutButton).toBeVisible();
     }
 
-    async verifyNameOfAddedProduct(value: string) {
-        await expect(this.addedProductName).toBeVisible();
-        await expect(this.addedProductName).toHaveText(value);
+    async verifyProductsInCart(products: string | string[]) {
+        // Convert single string to array
+        if (!Array.isArray(products)) {
+            products = [products];
+        }
+        for (const name of products) {
+        const product = this.addedProductName.filter({ hasText: name });
+        await expect(product).toBeVisible();
+        }
     }
 
     async removeProductFromCart() {
@@ -61,7 +67,12 @@ export class CartPage {
     }
 
     async verifyThatProductIsRemovedFromCart() {
-        await expect(this.emptyCart).toBeHidden();
+        await expect(this.cart).toBeHidden();
     }
+
+    async countProductsInCartPage() {
+        const products = await this.page.locator('.cart_item').count();
+        return products;
+}
 }
 

@@ -1,6 +1,7 @@
-import { test } from '@playwright/test';
+import { test , expect} from '@playwright/test';
 import { LoginPage } from '../pages/loginPage';
 import { InventoryPage } from '../pages/inventoryPage';
+import { verifyUrl } from '../utils/utils';
 
 let loginPage: LoginPage;
 let inventoryPage: InventoryPage;
@@ -12,27 +13,41 @@ test.beforeEach(async ({ page }) => {
   inventoryPage = new InventoryPage(page);
   await loginPage.goto();
   await loginPage.login(username, password);
-
 });
 
 test('Verify that Products are listed on inventory page', async ({page}) => {
-    await inventoryPage.verifyInventoryPageIsVisible();
-    await inventoryPage.verifyProductsAreListed();
-    await inventoryPage.verifyProductsHaveNamesAndPrices();
+  await inventoryPage.verifyInventoryPageIsVisible();
+  await inventoryPage.verifyProductsAreListed();
+  await inventoryPage.verifyProductsHaveNamesAndPrices();
 })
 
 test('Verify that the product names and prices are visible on page', async({page}) => {
-    await inventoryPage.verifyProductNamesAreVisible();
-    await inventoryPage.verifyProductPricesAreVisible();
+  await inventoryPage.verifyProductNamesAreVisible();
+  await inventoryPage.verifyProductPricesAreVisible();
 })
 
 test('Verify that the user can add a product to Add cart', async({page}) => {
-    await inventoryPage.addToCart(2);
-    await inventoryPage.verifyProductIsAddedToCart(0);
+  await inventoryPage.addToCart(2);
+  await inventoryPage.verifyProductIsAddedToCart(0);
 })
 
-test('Verify that product can be removed from Cart', async ({ page }) => {
+test('Verify that product can be removed from Cart', async({ page }) => {
   await inventoryPage.addToCart(1);
   await inventoryPage.verifyProductIsAddedToCart(0);
-  await inventoryPage.removeFromCart(0);
+  await inventoryPage.removeProductFromProductsPage(0);
 });
+
+test('Verify that clicking a product redirects to the product detail page', async({page}) => {
+  await inventoryPage.verifyInventoryPageIsVisible();
+  await inventoryPage.verifyProductsAreListed();
+  await inventoryPage.verifyProductNamesAreVisible();
+  await inventoryPage.clickOnProduct();
+  await verifyUrl(page, /inventory-item\.html\?id=4/)
+})
+
+test('Verify product details are displayed on the product detail page', async({page}) => {
+  await inventoryPage.verifyInventoryPageIsVisible();
+  await inventoryPage.verifyProductsAreListed();
+  await inventoryPage.clickOnProduct();
+  await inventoryPage.verifyProductDetailsOnProductPage();
+})
