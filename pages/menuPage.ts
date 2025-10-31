@@ -12,7 +12,7 @@ export class MenuPage {
     }
 
 
-    async verifyThatHamburegerMenuIsVisible() {
+    async verifyThatHamburgerMenuIsVisible() {
         await expect(this.menuIcon).toBeVisible();
     }
 
@@ -22,5 +22,17 @@ export class MenuPage {
 
     async countHamburgerMenuItems(menuItems: string[]) {
         await expect(this.menuList).toHaveCount(menuItems.length);
+    }
+
+    async verifyHamburgerMenuItemsVisibility(menuItems: string[]) {
+        for (const item of menuItems) {
+            await expect(this.menuList.filter({ hasText: item })).toBeVisible();
+        }
+    }
+
+    async clickOnMenuItem(item: string) {
+        const menuItem = this.menuList.filter({ hasText: item });
+        await expect(menuItem).toBeVisible();
+        await menuItem.click();
     }
 }
