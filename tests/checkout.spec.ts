@@ -53,7 +53,62 @@ test('Verify that the Cancel and Continue buttons are displayed on the Checkout 
     await expect(continueButton).toBeVisible();
 });
 
+test('Verify that the Checkout Overview page displays product and order details', async ({ page }) => {
+    await inventoryPage.addToCart(3);
+    await cartPage.clickOnCartIcon();
+    await cartPage.verifyCartPageIsDisplayed();
+    await cartPage.verifyCheckoutButtonIsDisplayed();
+    await page.locator("#checkout").click();
+    await fillForm(page, [{ "locator": "#first-name", "value": "Elena" },
+    { "locator": "#last-name", "value": "Test" },
+    { "locator": "#postal-code", "value": "1100" }]);
+    await page.locator("#continue").click();
+    await inventoryPage.verifyProductNamesAreVisible();
+    await expect(page.locator(".summary_info_label").nth(0)).toHaveText("Payment Information:")
+    const paymentValue = await page.locator(".summary_value_label").nth(0).innerText();
+    expect(paymentValue).toMatch(/^SauceCard\s#\d+$/);
+    await expect(page.locator(".summary_info_label").nth(1)).toHaveText("Shipping Information:")
+    const shippingValue = await page.locator(".summary_value_label").nth(1).innerText();
+    expect(shippingValue).toMatch(/(delivery|shipping)/i);
+    await expect(page.locator(".summary_info_label").nth(2)).toHaveText("Price Total")
+    const itemTotal = await page.locator(".summary_subtotal_label").innerText();
+    expect(itemTotal).toMatch(/^Item total:\s\$\d+(\.\d{2})?$/);
+    const itemTax = await page.locator(".summary_tax_label").innerText();
+    expect(itemTax).toMatch(/^Tax:\s\$\d+(\.\d{2})?$/);
+    const totalPrice = await page.locator(".summary_total_label").innerText();
+    expect(totalPrice).toMatch(/^Total:\s\$\d+(\.\d{2})?$/);
+});
 
+test('Verify that clicking Cancel on the Checkout Overview redirects the user to the Products page', async ({ page }) => {
+    await inventoryPage.addToCart(3);
+    await cartPage.clickOnCartIcon();
+    await cartPage.verifyCartPageIsDisplayed();
+    await cartPage.verifyCheckoutButtonIsDisplayed();
+    await page.locator("#checkout").click();
+    await fillForm(page, [{ "locator": "#first-name", "value": "Elena" },
+    { "locator": "#last-name", "value": "Test" },
+    { "locator": "#postal-code", "value": "1100" }]);
+    await page.locator("#continue").click();
+    await verifyUrl(page, /checkout-step-two\.html/)
+    await page.locator("#cancel").click();
+    await verifyUrl(page, /inventory\.html/)
+})
+
+test('Verify that completing checkout shows a successful payment confirmation', async ({ page }) => {
+    await inventoryPage.addToCart(3);
+    await cartPage.clickOnCartIcon();
+    await cartPage.verifyCartPageIsDisplayed();
+    await cartPage.verifyCheckoutButtonIsDisplayed();
+    await page.locator("#checkout").click();
+    await fillForm(page, [{ "locator": "#first-name", "value": "Elena" },
+    { "locator": "#last-name", "value": "Test" },
+    { "locator": "#postal-code", "value": "1100" }]);
+    await page.locator("#continue").click();
+    await page.locator("#finish").click();
+    await verifyUrl(page, /checkout-complete\.html/);
+    const successfulPaymentMsg = await page.locator(".complete-header", { hasText: "Thank you for your order!" });
+    await expect(successfulPaymentMsg).toBeVisible();
+});
 
 test('Verify that the user can successfully complete the checkout process', async ({ page }) => {
     await inventoryPage.addToCart(0);
