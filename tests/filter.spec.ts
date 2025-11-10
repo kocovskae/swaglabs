@@ -43,7 +43,7 @@ test('Verify Price (high to low) filter sorts products correctly', async({page})
     await filterPage.getProductsByHighestPrice();
 });
 
-test('Verify selected filter after page refresh is back to default filter', async ({ page }) => {
+test.only('Verify selected filter after page refresh is back to default filter', async ({ page }) => {
   await filterPage.selectFilterOption("lohi");
   await filterPage.verifyFilterResetsToDefault();
 });

@@ -9,11 +9,10 @@ export class LoginPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.username = this.page.locator("#user-name");
-    this.password = this.page.locator("#password");
-    this.loginbt = this.page.locator("#login-button");
-    this.errorMessage = this.page.locator('h3[data-test="error"]');
-    
+    this.username = this.page.locator('[data-test="username"]');
+    this.password = this.page.locator('[data-test="password"]');
+    this.loginbt = this.page.locator('[data-test="login-button"]');
+    this.errorMessage = this.page.locator('[data-test="error"]');
   }
 
   async goto() {
@@ -26,7 +25,7 @@ export class LoginPage {
     await this.loginbt.click();
   }
 
-   async getErrorMessage() {
+  async getErrorMessage() {
     return await this.errorMessage.textContent();
   }
 }

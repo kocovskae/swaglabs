@@ -56,8 +56,8 @@ export class CartPage {
             products = [products];
         }
         for (const name of products) {
-        const product = this.addedProductName.filter({ hasText: name });
-        await expect(product).toBeVisible();
+            const product = this.addedProductName.filter({ hasText: name });
+            await expect(product).toBeVisible();
         }
     }
 
@@ -73,6 +73,6 @@ export class CartPage {
     async countProductsInCartPage() {
         const products = await this.page.locator('.cart_item').count();
         return products;
-}
+    }
 }
 
