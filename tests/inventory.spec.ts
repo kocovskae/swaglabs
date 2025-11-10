@@ -1,18 +1,12 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/loginPage';
 import { InventoryPage } from '../pages/inventoryPage';
 import { verifyUrl } from '../utils/utils';
 
-let loginPage: LoginPage;
 let inventoryPage: InventoryPage;
-let username = "standard_user";
-let password = "secret_sauce";
 
 test.beforeEach(async ({ page }) => {
-  loginPage = new LoginPage(page);
   inventoryPage = new InventoryPage(page);
-  await loginPage.goto();
-  await loginPage.login(username, password);
+  await page.goto('https://www.saucedemo.com/inventory.html');
 });
 
 test('Verify that Products are listed on inventory page', async ({ page }) => {

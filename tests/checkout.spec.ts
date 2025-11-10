@@ -1,25 +1,20 @@
 import { test, expect } from '@playwright/test'
-import { LoginPage } from '../pages/loginPage';
 import { InventoryPage } from '../pages/inventoryPage';
 import { CartPage } from '../pages/cartPage';
 import { verifyUrl } from '../utils/utils';
 import { fillForm } from '../utils/utils';
 import { CheckoutPage } from '../pages/checkoutPage';
 
-let loginPage: LoginPage;
 let inventoryPage: InventoryPage;
 let cartPage: CartPage;
 let checkoutPage: CheckoutPage;
-let username = "standard_user";
-let password = "secret_sauce";
 
 test.beforeEach(async ({ page }) => {
-    loginPage = new LoginPage(page);
     inventoryPage = new InventoryPage(page);
     cartPage = new CartPage(page);
     checkoutPage = new CheckoutPage(page);
-    await loginPage.goto();
-    await loginPage.login(username, password);
+
+    await page.goto('https://www.saucedemo.com/inventory.html');
 });
 
 test('Verify redirection to Checkout page after clicking Checkout button', async ({ page }) => {
@@ -50,7 +45,7 @@ test('Verify that the Cancel and Continue buttons are displayed on the Checkout 
     await checkoutPage.verifyContinueButtonIsVisible();
 });
 
-test.only('Verify that the Checkout Overview page displays product and order details', async ({ page }) => {
+test('Verify that the Checkout Overview page displays product and order details', async ({ page }) => {
     await inventoryPage.addToCart(3);
     await cartPage.clickOnCartIcon();
     await cartPage.verifyCartPageIsDisplayed();

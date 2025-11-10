@@ -1,20 +1,16 @@
 import { InventoryPage } from './../pages/inventoryPage';
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/loginPage';
 import { MenuPage } from '../pages/menuPage';
 import { verifyUrl } from '../utils/utils';
 
-let loginPage: LoginPage;
 let inventoryPage: InventoryPage;
 let menuPage: MenuPage;
 const menuItems = ["All Items", "About", "Logout", "Reset App State"];
 
 test.beforeEach(async ({ page }) => {
-    loginPage = new LoginPage(page);
     inventoryPage = new InventoryPage(page);
     menuPage = new MenuPage(page);
-    await loginPage.goto();
-    await loginPage.login("standard_user", "secret_sauce");
+    await page.goto('https://www.saucedemo.com/inventory.html');
     await inventoryPage.verifyInventoryPageIsVisible();
     await menuPage.verifyThatHamburgerMenuIsVisible();
     await menuPage.clickOnHamburgerMenu();

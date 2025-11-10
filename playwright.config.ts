@@ -5,14 +5,16 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './tests',   // folder where your tests live
-  timeout: 30 *1000,    // max time for each test (60s)
+  globalSetup: './global-setup/globalSetup.ts',  // relative to project root
+  timeout: 30 * 1000,    // max time for each test (60s)
   expect: {
     timeout: 5000       // max time for expect() checks
   },
   retries: 1,           // retry failed tests once
-  
-  reporter: 'html',     
+
+  reporter: 'html',
   use: {
+    storageState: 'storageState.json',
     browserName: 'chromium',
     headless: false,
     trace: 'retain-on-failure'

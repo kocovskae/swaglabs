@@ -1,21 +1,16 @@
 import { test, expect } from '@playwright/test'
-import { LoginPage } from '../pages/loginPage'
 import { InventoryPage } from '../pages/inventoryPage';
 import { CartPage } from '../pages/cartPage';
 
-let loginPage: LoginPage;
 let inventoryPage: InventoryPage;
 let cartPage: CartPage;
-const username = "standard_user";
-const password = "secret_sauce";
+
 
 test.beforeEach(async ({ page }) => {
-    loginPage = new LoginPage(page);
     inventoryPage = new InventoryPage(page);
     cartPage = new CartPage(page);
 
-    await loginPage.goto();
-    await loginPage.login(username, password);
+    await page.goto('https://www.saucedemo.com/inventory.html');
     await inventoryPage.verifyInventoryPageIsVisible();
 })
 
@@ -36,7 +31,7 @@ test('Verify that the added product is displayed on the Cart page', async ({ pag
     await cartPage.verifyProductsInCart("Sauce Labs Bolt T-Shirt");
 })
 
-test('Verify that user can add multiple products to the cart and they are displayed correctly', async ({page}) => {
+test('Verify that user can add multiple products to the cart and they are displayed correctly', async ({ page }) => {
     await inventoryPage.addToCart(0);
     await inventoryPage.addToCart(4);
     await cartPage.clickOnCartIcon();
