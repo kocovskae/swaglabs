@@ -109,5 +109,12 @@ test('Verify that the user can successfully complete the checkout process', asyn
 });
 
 test('Verify error messages for invalid inputs in Checkout form', async ({ page }) => {
-
+    await cartPage.clickOnCartIcon();
+    await checkoutPage.clickOnCheckoutButton();
+    await checkoutPage.verifyCheckoutFormIsVisible();
+    await fillForm(page, [{ "locator": "#first-name", "value": "Elena" },
+    { "locator": "#last-name", "value": "Test" },
+    { "locator": "#postal-code", "value": "" }]);
+    await checkoutPage.clickContinueButton();
+    await checkoutPage.verifyErrorMessage("Error: Postal Code is required");
 });

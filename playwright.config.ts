@@ -1,9 +1,17 @@
 import { defineConfig, devices } from '@playwright/test';
 
+
 /**
 * @see https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+
+  projects: [
+    { name: 'chromium', use: { browserName: 'chromium' } },
+    { name: 'firefox', use: { browserName: 'firefox' } },
+    { name: 'webkit', use: { browserName: 'webkit' } },
+  ],
+
   testDir: './tests',   // folder where your tests live
   globalSetup: './global-setup/globalSetup.ts',  // relative to project root
   timeout: 60 * 1000,    // max time for each test (60s)
@@ -15,7 +23,7 @@ export default defineConfig({
   reporter: 'html',
   use: {
     storageState: 'storageState.json',
-    browserName: 'chromium',
+    //browserName: 'chromium',
     headless: true,
     trace: 'retain-on-failure'
   },

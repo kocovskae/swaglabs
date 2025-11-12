@@ -15,6 +15,7 @@ export class CheckoutPage {
     readonly summaryTotal;
     readonly finishButton;
     readonly paymentSuccessMessage;
+    readonly errorMessage;
 
     constructor(page: Page) {
         this.page = page;
@@ -31,6 +32,7 @@ export class CheckoutPage {
         this.summaryTotal = page.locator('[data-test="total-label"]');
         this.finishButton = page.locator('[data-test="finish"]');
         this.paymentSuccessMessage = page.locator('[data-test="complete-header"]');
+        this.errorMessage = page.locator('[data-test="error"]');
     }
 
     async clickOnCheckoutButton() {
@@ -84,5 +86,8 @@ export class CheckoutPage {
         await expect(successfulPaymentMsg).toBeVisible();
     }
 
-    
-};
+    async verifyErrorMessage(errorMessage: string) {
+        const messages = this.errorMessage;
+        await expect(messages).toContainText(errorMessage);
+    }
+}
