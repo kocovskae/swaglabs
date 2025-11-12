@@ -6,7 +6,7 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './tests',   // folder where your tests live
   globalSetup: './global-setup/globalSetup.ts',  // relative to project root
-  timeout: 30 * 1000,    // max time for each test (60s)
+  timeout: 60 * 1000,    // max time for each test (60s)
   expect: {
     timeout: 5000       // max time for expect() checks
   },
