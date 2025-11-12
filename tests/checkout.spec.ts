@@ -107,3 +107,7 @@ test('Verify that the user can successfully complete the checkout process', asyn
     await verifyUrl(page, /checkout-complete\.html/)
     await checkoutPage.verifySuccessfullPaymentMessage();
 });
+
+test('Verify error messages for invalid inputs in Checkout form', async ({ page }) => {
+
+});

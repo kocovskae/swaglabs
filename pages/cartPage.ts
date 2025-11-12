@@ -13,14 +13,14 @@ export class CartPage {
 
     constructor(page: Page) {
         this.page = page;
-        this.cartLink = page.locator(".shopping_cart_link");
-        this.cartTitle = page.locator(".title");
-        this.cartBadge = page.locator(".shopping_cart_badge");
-        this.continueShoppingBtn = page.locator("#continue-shopping");
-        this.checkoutButton = page.locator("#checkout");
-        this.addedProductName = page.locator(".cart_item .inventory_item_name");
-        this.removeBtn = page.locator(".cart_button");
-        this.cart = page.locator(".cart_item");
+        this.cartLink = page.locator('[data-test="shopping-cart-link"]');
+        this.cartTitle = page.locator('[data-test="title"]');
+        this.cartBadge = page.locator('[data-test="shopping-cart-link"]');
+        this.continueShoppingBtn = page.locator('[data-test="continue-shopping"]');
+        this.checkoutButton = page.locator('[data-test="checkout"]');
+        this.addedProductName = page.locator('[data-test="inventory-item"]');
+        this.removeBtn = page.getByRole('button', { name: "Remove" });
+        this.cart = page.locator('[data-test="inventory-item"]');
     }
 
     async clickOnCartIcon() {

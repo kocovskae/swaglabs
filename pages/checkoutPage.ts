@@ -18,19 +18,19 @@ export class CheckoutPage {
 
     constructor(page: Page) {
         this.page = page;
-        this.checkoutBtn = page.locator("#checkout");
-        this.firstNameField = page.locator("#first-name");
-        this.lastNameField = page.locator("#last-name");
-        this.postalCodeField = page.locator("#postal-code");
-        this.cancelButton = page.locator("#cancel");
-        this.continueButton = page.locator("#continue");
+        this.checkoutBtn = page.locator('[data-test="checkout"]');
+        this.firstNameField = page.locator('[data-test="firstName"]');
+        this.lastNameField = page.locator('[data-test="lastName"]');
+        this.postalCodeField = page.locator('[data-test="postalCode"]');
+        this.cancelButton = page.locator('[data-test="cancel"]');
+        this.continueButton = page.locator('[data-test="continue"]');
         this.orderSummaryInfo = page.locator(".summary_info_label");
         this.orderSummaryValue = page.locator(".summary_value_label");
-        this.summarySubtotal = page.locator(".summary_subtotal_label");
-        this.summaryTax = page.locator(".summary_tax_label");
-        this.summaryTotal = page.locator(".summary_total_label");
-        this.finishButton = page.locator("#finish");
-        this.paymentSuccessMessage = page.locator(".complete-header", { hasText: "Thank you for your order!" });
+        this.summarySubtotal = page.locator('[data-test="subtotal-label"]');
+        this.summaryTax = page.locator('[data-test="tax-label"]');
+        this.summaryTotal = page.locator('[data-test="total-label"]');
+        this.finishButton = page.locator('[data-test="finish"]');
+        this.paymentSuccessMessage = page.locator('[data-test="complete-header"]');
     }
 
     async clickOnCheckoutButton() {
@@ -84,5 +84,5 @@ export class CheckoutPage {
         await expect(successfulPaymentMsg).toBeVisible();
     }
 
-
+    
 };
