@@ -16,7 +16,7 @@ export default defineConfig({
   use: {
     storageState: 'storageState.json',
     browserName: 'chromium',
-    headless: false,
+    headless: true,
     trace: 'retain-on-failure'
   },
 
