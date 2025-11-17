@@ -4,7 +4,6 @@ export class CartPage {
     readonly page: Page;
     readonly cartLink;
     readonly cartTitle;
-    readonly cartBadge;
     readonly continueShoppingBtn;
     readonly checkoutButton;
     readonly addedProductName;
@@ -15,7 +14,6 @@ export class CartPage {
         this.page = page;
         this.cartLink = page.locator('[data-test="shopping-cart-link"]');
         this.cartTitle = page.locator('[data-test="title"]');
-        this.cartBadge = page.locator('[data-test="shopping-cart-link"]');
         this.continueShoppingBtn = page.locator('[data-test="continue-shopping"]');
         this.checkoutButton = page.locator('[data-test="checkout"]');
         this.addedProductName = page.locator('[data-test="inventory-item"]');
@@ -34,8 +32,8 @@ export class CartPage {
     }
 
     async verifyProductsAreDisplayedInCartBadge(value: string) {
-        await expect(this.cartBadge).toBeVisible();
-        await expect(this.cartBadge).toHaveText(value);
+        await expect(this.cartLink).toBeVisible();
+        await expect(this.cartLink).toHaveText(value);
     }
 
     async verifyContinueShoppingButtonIsDisplayed() {

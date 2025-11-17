@@ -22,9 +22,10 @@ export default defineConfig({
 
   reporter: 'html',
   use: {
+    baseURL: 'https://www.saucedemo.com',
     storageState: 'storageState.json',
     //browserName: 'chromium',
-    headless: true,
+    headless: false,
     trace: 'retain-on-failure'
   },
 
