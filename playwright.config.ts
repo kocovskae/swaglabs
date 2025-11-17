@@ -25,7 +25,7 @@ export default defineConfig({
     baseURL: 'https://www.saucedemo.com',
     storageState: 'storageState.json',
     //browserName: 'chromium',
-    headless: false,
+    headless: true,
     trace: 'retain-on-failure'
   },
 
