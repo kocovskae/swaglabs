@@ -12,7 +12,7 @@ test('Verify that the cart icon displays the correct number of products added to
     await cartPage?.verifyProductsAreDisplayedInCartBadge("1");
 });
 
-test('Verify that the added product is displayed on the Cart page', async ({ inventoryPage, cartPage }) => {
+test('Verify that the added product is displayed on the Cart page Test', async ({ inventoryPage, cartPage }) => {
     await inventoryPage.addToCart(2);
     await cartPage?.clickOnCartIcon();
     await cartPage?.verifyCartPageIsDisplayed();
